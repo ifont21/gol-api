@@ -1,0 +1,10 @@
+.env
+node_modules
+.vscode
+.idea
+**/.DS_Store
+package-lock.json
+swagger/docs/swagger.json
+test-reports
+version
+CI_VARIABLES
