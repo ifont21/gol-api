@@ -1,0 +1,11 @@
+{
+    "DB": {
+        "mongoURI": "mongodb://ds113402.mlab.com:13402/teamgoldb",
+        "options": {
+            "useNewUrlParser": true,
+            "autoIndex": false,
+            "poolSize": 10,
+            "reconnectInterval": 500
+        }
+    }
+}
