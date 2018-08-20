@@ -9,9 +9,9 @@ const EventSchema = new Schema(
     dt_event: { type: Date, required: true },
     type: { type: String, required: true },
     location: { type: String, required: true },
-    owner: { type: Schema.Types.ObjectId },
+    owner: { type: Schema.Types.ObjectId, ref: 'Player' },
     description: { type: String },
-    active: { type: Boolean, required: true },
+    max_players: { type: Number },
     players: [{ type: Schema.Types.ObjectId, ref: 'Player' }],
     auditory: AuditorySchema
   }

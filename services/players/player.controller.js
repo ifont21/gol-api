@@ -3,19 +3,13 @@ const Player = require('../players/models/player');
 
 const getAll = () =>
   wrap(async (req, res) => {
-    Player
-      .find()
-      .then(
-        (players) => {
-          res.json(players);
-        },
-        (err) => {
-          res.status(500).send(err);
-        });
+    const players = await Player.find();
+    res.json(players);
   });
 
 const post = () =>
   wrap(async (req, res) => {
+    let response;
     const item = req.body;
     const auditory = {
       dt_created: Date.now(),
@@ -27,16 +21,12 @@ const post = () =>
       ...item,
       auditory
     });
-    player
-      .save()
-      .then(
-        (response) => {
-          res.json(response);
-        },
-        (err) => {
-          res.status(500).send(err);
-        }
-      );
+    try {
+      response = await player.save();
+    } catch (err) {
+      res.status(500).json(err);
+    }
+    res.json(response);
   });
 
 
