@@ -24,6 +24,12 @@ const signUp = () =>
     }
   });
 
+const user = () =>
+  wrap(async (req, res) => {
+    res.json(req.user);
+  });
+
 module.exports = {
-  signUp
+  signUp,
+  user
 }
