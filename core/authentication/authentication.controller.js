@@ -8,19 +8,11 @@ const signUp = () =>
     const item = req.body;
     const user = new User(item);
 
-    try {
-      response = await user.save();
-    } catch (err) {
-      res.status(500).json(err);
-    }
+    response = await user.save();
 
-    try {
-      if (response) {
-        token = await user.generateAuthToken();
-        res.header('x-auth', token).send(user);
-      }
-    } catch (err) {
-      res.status(500).json(err);
+    if (response) {
+      token = await user.generateAuthToken();
+      res.header('x-auth', token).send(user);
     }
   });
 

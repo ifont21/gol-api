@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('./mongoose/mongoose');
+const errorHandlerMiddleware = require('./core/middleware/error-handler');
 
 const routes = require('./services/routes');
 const authRoutes = require('./core/authentication/routes');
@@ -19,6 +20,9 @@ app.get('/test', (req, res) => {
 
 app.use('/auth', authRoutes);
 app.use('/api', routes);
+
+// middleware
+app.use(errorHandlerMiddleware());
 
 app.listen(defaultPort, async () => {
     console.log(`Navigate to http://localhost:${defaultPort} to use the application`);

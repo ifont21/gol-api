@@ -21,11 +21,9 @@ const post = () =>
       ...item,
       auditory
     });
-    try {
-      response = await player.save();
-    } catch (err) {
-      res.status(500).json(err);
-    }
+
+    response = await player.save();
+
     res.json(response);
   });
 

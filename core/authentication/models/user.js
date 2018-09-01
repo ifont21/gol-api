@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
+const uniqueValidator = require('mongoose-unique-validator');
 
 const Schema = mongoose.Schema;
 
@@ -8,10 +9,10 @@ const UserSchema = new Schema(
   {
     email: {
       type: String,
+      unique: true,
       required: true,
       trim: true,
-      minlength: 1,
-      unique: true
+      minlength: 1
     },
     password: {
       type: String,
@@ -32,6 +33,8 @@ const UserSchema = new Schema(
     ]
   }
 );
+
+UserSchema.plugin(uniqueValidator);
 
 UserSchema.methods.toJSON = function () {
   let user = this;

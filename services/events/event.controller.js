@@ -31,11 +31,8 @@ const post = () =>
       auditory
     });
 
-    try {
-      response = await event.save();
-    } catch (err) {
-      res.status(500).json(err);
-    }
+    response = await event.save();
+
     res.json(response);
   });
 
@@ -44,9 +41,10 @@ const processPlayerToEvent = () =>
     let response;
     const playerId = req.params.playerId;
     const eventId = req.params.eventId;
-    let adding = req.headers['adding'] || true;
-    adding = typeof adding === 'string' ? adding === 'true' : adding;
-    
+    debugger;
+    let remove = req.headers['if-remove-player'] || false;
+    remove = typeof remove === 'string' ? remove === 'true' : remove;
+
     if (!ObjectID.isValid(eventId)) {
       return res.status(404).json({ error: 'invalid id' });
     }
@@ -56,7 +54,7 @@ const processPlayerToEvent = () =>
     const event = await Event.findById(eventId);
     const player = await Player.findById(playerId);
 
-    if (adding) {
+    if (!remove) {
       if (isExistingPlayer(event.players, playerId)) {
         return res.status(500).json({ error: 'Player already registered' });
       }
@@ -66,17 +64,14 @@ const processPlayerToEvent = () =>
       }
     }
 
-    if (adding) {
+    if (!remove) {
       event.players.push(player);
     } else {
       event.players = removeItem(event.players, playerId);
     }
 
-    try {
-      response = await event.save();
-    } catch (err) {
-      res.status(500).json(err);
-    }
+    response = await event.save();
+
     res.json(response);
   });
 
