@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 const uniqueValidator = require('mongoose-unique-validator');
 const bcrypt = require('bcryptjs');
+const Player = require('../../../services/players/models/player');
 
 const Schema = mongoose.Schema;
 
@@ -84,24 +85,37 @@ UserSchema.statics.findByToken = async function (token) {
   return user;
 }
 
-UserSchema.pre('save', function(next){
+UserSchema.pre('save', function (next) {
   var user = this;
 
-  if(user.isModified('password')){
+  if (user.isModified('password')) {
     bcrypt.genSalt(10, (err, salt) => {
-      bcrypt.hash(user.password, salt, (err, hash) =>{
+      bcrypt.hash(user.password, salt, (err, hash) => {
         user.password = hash;
         next();
       });
     });
-  }else{
+  } else {
     next();
   }
 });
 
-// TODO: define post hook to create a player after create a user
-// UserSchema.post('save', function(user,next) {
-    
-// });
+UserSchema.post('save', async function (user, next) {
+  let response;
+  const userAlready = await Player.findOne({ user: user.id });
+  if (!userAlready) {
+    const player = new Player({
+      name: user.email,
+      user: user.id
+    });
+    try {
+      response = await player.save();
+    } catch (err) {
+      throw new Error(err);
+    }
+  } else {
+    next();
+  }
+});
 
 module.exports = mongoose.model('User', UserSchema);

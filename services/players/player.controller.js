@@ -3,7 +3,8 @@ const Player = require('../players/models/player');
 
 const getAll = () =>
   wrap(async (req, res) => {
-    const players = await Player.find();
+    const players = await Player.find()
+      .populate('user');
     res.json(players);
   });
 
