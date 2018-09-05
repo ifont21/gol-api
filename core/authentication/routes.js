@@ -8,10 +8,21 @@ router.post(
   authenticationController.signUp()
 )
 
+router.post(
+  '/users/signin',
+  authenticationController.signIn()
+)
+
 router.get(
   '/users/me',
   authenticate,
   authenticationController.user()
+);
+
+router.delete(
+  '/users/me/token',
+  authenticate,
+  authenticationController.logOut()
 )
 
 module.exports = router;

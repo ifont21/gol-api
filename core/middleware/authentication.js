@@ -1,17 +1,14 @@
 const User = require('../authentication/models/user');
 
 const authenticate = async (req, res, next) => {
+  debugger;
   let token = req.header('x-auth');
   let user;
 
-  try {
-    user = await User.findByToken(token);
-  } catch (error) {
-    res.status(400).json({});
-  }
+  user = await User.findByToken(token);
 
   if (!user) {
-    res.status(400).json({});
+    return res.status(400).send();
   }
   req.user = user;
   req.token = token;

@@ -61,6 +61,16 @@ UserSchema.methods.generateAuthToken = async function () {
   return token;
 }
 
+UserSchema.methods.removeToken = function (token) {
+  let user = this;
+  
+  return user.update({
+    $pull: {
+      tokens: { token }
+    }
+  });
+}
+
 UserSchema.statics.findByToken = async function (token) {
   let User = this;
   let decoded, user;
@@ -83,6 +93,22 @@ UserSchema.statics.findByToken = async function (token) {
   }
 
   return user;
+}
+
+UserSchema.statics.findByCredentials = async function (email, password) {
+  let User = this;
+  const user = await User.findOne({ email });
+  if (user) {
+    const pass = await bcrypt.compare(password, user.password);
+    if (pass) {
+      return user;
+    } else {
+      return null;
+    }
+  } else {
+    return null;
+  }
+
 }
 
 UserSchema.pre('save', function (next) {
