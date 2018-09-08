@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('./mongoose/mongoose');
 const errorHandlerMiddleware = require('./core/middleware/error-handler');
+const schedule = require('./schedule/event.cron');
 
 const routes = require('./services/routes');
 const authRoutes = require('./core/authentication/routes');

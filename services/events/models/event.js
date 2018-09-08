@@ -7,6 +7,7 @@ const EventSchema = new Schema(
   {
     name: { type: String, required: true },
     dt_event: { type: Date, required: true },
+    renewable_type: { type: String },
     type: { type: String, required: true },
     location: { type: String, required: true },
     owner: { type: Schema.Types.ObjectId, ref: 'Player' },
