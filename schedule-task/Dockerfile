@@ -1,6 +1,6 @@
 FROM node:8.9.4
 
-WORKDIR /usr/src/api
+WORKDIR /usr/src/worker
 
 RUN npm config set cache /usr/src/cache
 

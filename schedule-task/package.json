@@ -1,0 +1,20 @@
+{
+  "name": "schedule-task",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node schedule.js",
+    "debug": "node_modules/.bin/nodemon --inspect=0.0.0.0:9222 schedule.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ignacio",
+  "license": "ISC",
+  "dependencies": {
+    "cron": "^1.4.1",
+    "express": "4.16.1"
+  },
+  "devDependencies": {
+    "nodemon": "1.18.3"
+  }
+}

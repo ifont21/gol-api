@@ -14,10 +14,13 @@ services:
           - "9221"
     entrypoint: ["npm", "run", "debug"]
     restart: always
-  schedule:
+  worker:
     build: .
+    volumes:
+          - ".:/usr/src/worker"
+          - "/usr/src/worker/node_modules"
     expose:
-          - "9223"
           - "9224"
-    entrypoint: ["npm", "run", "debug:schedule"]
+          - "9223"
+    entrypoint: ["npm", "run", "debug:worker"]
     restart: always

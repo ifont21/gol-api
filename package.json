@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "start:schedule":"node schedule.js",
+    "start:worker":"node ./schedule-task/schedule.js",
+    "debug:worker": "node_modules/.bin/nodemon --inspect=0.0.0.0:9222 ./schedule-task/schedule.js",
     "debug": "node_modules/.bin/nodemon --inspect=0.0.0.0:9222 server.js",
-    "debug:schedule": "node_modules/.bin/nodemon --inspect=0.0.0.0:9222 schedule.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "ignacio",
